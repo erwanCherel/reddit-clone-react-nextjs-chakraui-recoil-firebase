@@ -86,24 +86,28 @@ const NewPostForm: React.FC<NewPostFormProps> = ({ user }) => {
 
     setLoading(true);
     try {
+      // store the post in db
       const postDocRef = await addDoc(collection(firestore, "posts"), newPost);
 
+      // check for selectedFIle
       if (selectedFile) {
+        // store in storage => getDownloadURL (return imageURL)
         const imageRef = ref(storage, `posts/${postDocRef.id}/image`);
         await uploadString(imageRef, selectedFile, "data_url");
         const downloadURL = await getDownloadURL(imageRef);
 
+        // update post doc by adding imageURL
         await updateDoc(postDocRef, {
           imageURL: downloadURL,
         });
       }
+      // redirect the user back to the communityPage using the router
+      router.back();
     } catch (error: any) {
       console.log("handleCreatePost error", error.message);
       setError(true);
     }
     setLoading(false);
-
-    // router.back();
   };
 
   const onSelectImage = (event: React.ChangeEvent<HTMLInputElement>) => {

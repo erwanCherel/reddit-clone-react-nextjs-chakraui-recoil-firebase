@@ -14,7 +14,7 @@ const CreatePostLink: React.FC = () => {
   const router = useRouter();
   const [user] = useAuthState(auth);
   const setAuthModalState = useSetRecoilState(authModalState);
-  //   const { toggleMenuOpen } = useDirectory();
+  // const { toggleMenuOpen } = useDirectory();
 
   const onClick = () => {
     // Could check for user to open auth modal before redirecting to submit
@@ -22,12 +22,9 @@ const CreatePostLink: React.FC = () => {
       setAuthModalState({ open: true, view: "login" });
       return;
     }
-
     const { community } = router.query;
-    if (community) {
-      router.push(`/r/${router.query.community}/submit`);
-      return;
-    }
+    router.push(`/r/${router.query.communityId}/submit`);
+    return;
     // Open directory menu to select community to post to
     // toggleMenuOpen();
   };
