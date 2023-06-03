@@ -17,6 +17,7 @@ export interface CommunitySnippet {
 }
 
 interface CommunityState {
+  id?: string;
   mySnippets: CommunitySnippet[];
   currentCommunity?: Community;
 }
